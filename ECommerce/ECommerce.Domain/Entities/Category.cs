@@ -1,6 +1,7 @@
 ﻿using ECommerce.Domain.Common;
 
 namespace ECommerce.Domain.Entities;
+
 public class Category : EntityBase
 {
     public required string Name { get; set; }
@@ -10,6 +11,6 @@ public class Category : EntityBase
 
     public Category()
     {
-        Products = [];
+        Products = new HashSet<Product>();
     }
 }

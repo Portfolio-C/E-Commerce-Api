@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ECommerce.Application.Interfaces;
 
-namespace ECommerce.Application.Services
+namespace ECommerce.Application.Services;
+
+internal class AuthService : IAuthService
 {
-    internal class AuthService
-    {
-    }
 }
