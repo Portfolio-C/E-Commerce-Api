@@ -1,17 +1,15 @@
 ﻿using ECommerce.Application.Interfaces;
 using ECommerce.Application.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerce.Application.Extensions;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection RegisterApplication(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterApplication(this IServiceCollection services)
     {
         AddServices(services);
         
-
         return services;
     }
 

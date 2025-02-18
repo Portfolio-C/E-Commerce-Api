@@ -2,11 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Domain.Interfaces;
-public interface IECommerceDbContext
+
+public interface IApplicationDbContext
 {
-    DbSet<User> Users { get; set; }
-    DbSet<Product> Products { get; set; }
+    DbSet<ApplicationUser> ApplicationsUsers { get; set; }
     DbSet<Category> Categories { get; set; }
+    DbSet<Product> Products { get; set; }
     DbSet<Attachment> Attachments { get; set; }
 
     int SaveChanges();
