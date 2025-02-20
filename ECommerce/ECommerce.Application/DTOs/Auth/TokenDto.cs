@@ -1,12 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ECommerce.Application.DTOs.Auth;
 
-namespace ECommerce.Application.DTOs.Auth
-{
-    internal class TokenDto
-    {
-    }
-}
+public sealed record TokenDto(string AccessToken, string RefreshToken);

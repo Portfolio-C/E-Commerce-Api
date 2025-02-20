@@ -10,6 +10,8 @@ public interface IApplicationDbContext
     DbSet<Product> Products { get; set; }
     DbSet<Attachment> Attachments { get; set; }
 
+    DbSet<RefreshToken> RefreshTokens { get; set; }
+
     int SaveChanges();
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

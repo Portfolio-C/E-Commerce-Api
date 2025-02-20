@@ -1,4 +1,6 @@
-﻿using ECommerce.Domain.Interfaces;
+﻿using ECommerce.Application.Configurations;
+using ECommerce.Domain.Entities;
+using ECommerce.Domain.Interfaces;
 using ECommerce.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,15 +21,13 @@ public static class DependencyInjection
 
     private static void AddPersistence(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddDbContext<ApplicationDbContext>(options =>
+        services.AddDbContext<IApplicationDbContext, ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-
-        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
     }
 
     private static void AddIdentity(IServiceCollection services)
     {
-        services.AddIdentity<IdentityUser, IdentityRole>(options =>
+        services.AddIdentity<ApplicationUser, IdentityRole>(options =>
         {
             options.Password.RequiredLength = 8;
             options.Password.RequireUppercase = false;
@@ -37,5 +37,10 @@ public static class DependencyInjection
         })
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
+
+        services.Configure<DataProtectionTokenProviderOptions>(options =>
+        {
+            options.TokenLifespan = TimeSpan.FromHours(12);
+        });
     }
 }

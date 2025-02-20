@@ -7,17 +7,14 @@ using System.Reflection;
 
 namespace ECommerce.Infrastructure.Persistence;
 
-internal class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplicationDbContext
+internal class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    : IdentityDbContext<ApplicationUser>(options), IApplicationDbContext
 {
-    public virtual DbSet<ApplicationUser> ApplicationsUsers { get; set; }
-    public virtual DbSet<Category> Categories { get; set; }
-    public virtual DbSet<Product> Products { get; set; }
-    public virtual DbSet<Attachment> Attachments { get; set; }
-
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-        : base(options)
-    {
-    }
+    public virtual DbSet<ApplicationUser> ApplicationsUsers { get; set; } = null!;
+    public virtual DbSet<Category> Categories { get; set; } = null!;
+    public virtual DbSet<Product> Products { get; set; } = null!;
+    public virtual DbSet<Attachment> Attachments { get; set; } = null!;
+    public virtual DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

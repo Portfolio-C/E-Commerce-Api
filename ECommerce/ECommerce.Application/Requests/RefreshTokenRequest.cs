@@ -1,12 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ECommerce.Application.Requests;
 
-namespace ECommerce.Application.Requests
-{
-    internal class RefreshTokenDto
-    {
-    }
-}
+public sealed record RefreshTokenRequest(string RefreshToken);
