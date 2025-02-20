@@ -1,6 +1,5 @@
-﻿using ECommerce.Application.DTOs.Auth;
-using ECommerce.Application.Interfaces;
-using Microsoft.AspNetCore.Identity.Data;
+﻿using ECommerce.Application.Interfaces;
+using ECommerce.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Api.Controllers;
@@ -12,17 +11,47 @@ public class AuthController(IAuthService authService) : Controller
     /// Login to get JWT token.
     /// </summary>
     /// <param name="request">Username and password to request</param>
-    [HttpPost("request")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPost("login")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(StatusCodes.Status406NotAcceptable)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<LoginDto> LoginAsync([FromBody] LoginRequest request)
+    public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request)
     {
-        var token = await authService.LoginAsync(request);
+        try
+        {
+            var token = await authService.LoginAsync(request);
+            
+            if (token == null)
+                return Unauthorized("Invalid credentials");
 
-        return Ok(token);
+            return Ok(token);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred", Error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Register to get JWT token.
+    /// </summary>
+    /// <param name="request">Username, password to request</param>
+    [HttpPost("register")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest request)
+    {
+        try
+        {
+            await authService.RegisterAsync(request);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred", Error = ex.Message });
+        }
     }
 
     /// <summary>
@@ -37,8 +66,18 @@ public class AuthController(IAuthService authService) : Controller
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenRequest request)
     {
-        var response = await authService.RefreshTokenAsync(request);
+        try
+        {
+            var response = await authService.RefreshTokenAsync(request);
+            
+            if (response == null)
+                return Unauthorized("Invalid refresh token");
 
-        return Ok(response);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred", Error = ex.Message });
+        }
     }
 }
