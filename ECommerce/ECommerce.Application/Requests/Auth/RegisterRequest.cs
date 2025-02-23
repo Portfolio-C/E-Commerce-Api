@@ -1,6 +1,6 @@
 ﻿using ECommerce.Domain.Enums;
 
-namespace ECommerce.Application.Requests;
+namespace ECommerce.Application.Requests.Auth;
 
 public sealed record RegisterRequest(
     string FirstName,
