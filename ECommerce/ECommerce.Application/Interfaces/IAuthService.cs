@@ -1,5 +1,5 @@
 ﻿using ECommerce.Application.DTOs.Auth;
-using ECommerce.Application.Requests;
+using ECommerce.Application.Requests.Auth;
 
 namespace ECommerce.Application.Interfaces;
 
