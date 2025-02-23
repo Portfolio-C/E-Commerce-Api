@@ -1,4 +1,5 @@
 ﻿using ECommerce.Application.Interfaces;
+using ECommerce.Application.Mappings;
 using ECommerce.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,6 +9,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection RegisterApplication(this IServiceCollection services)
     {
+        services.AddAutoMapper(typeof(CategoryMappings).Assembly);
+
         AddServices(services);
         
         return services;
@@ -17,5 +20,6 @@ public static class DependencyInjection
     {
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<ITokenHandler, TokenHandler>();
+        services.AddScoped<ICateogryService, CategoryService>();
     }
 }

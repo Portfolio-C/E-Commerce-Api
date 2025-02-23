@@ -1,6 +1,6 @@
 ﻿using ECommerce.Application.DTOs.Auth;
 using ECommerce.Application.Interfaces;
-using ECommerce.Application.Requests;
+using ECommerce.Application.Requests.Auth;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Exceptions;
 using ECommerce.Domain.Interfaces;

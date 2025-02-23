@@ -1,13 +1,12 @@
 ﻿using ECommerce.Application.Configurations;
 using ECommerce.Application.Extensions;
 using ECommerce.Infrastructure.Extensions;
-using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Reflection;
 
 namespace ECommerce.Api.Extensions;
 
