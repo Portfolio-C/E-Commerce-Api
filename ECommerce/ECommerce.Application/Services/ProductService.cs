@@ -15,6 +15,7 @@ internal sealed class ProductService(IApplicationDbContext context, IMapper mapp
     public async Task<List<ProductDto>> GetAsync()
     {
         var products = await context.Products
+            .Include(p => p.Category)
             .ProjectTo<ProductDto>(mapper.ConfigurationProvider)
             .ToListAsync();
 
@@ -73,11 +74,14 @@ internal sealed class ProductService(IApplicationDbContext context, IMapper mapp
 
     private async Task<Product> GetAndValidateProductAsync(int id)
     {
-        var entity = await context.Products.FirstOrDefaultAsync(x => x.Id == id);
+        var entity = await context.Products
+            .Include(p => p.Category)
+            .Include(p => p.Attachments)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity is null)
         {
-            throw new EntityNotFoundException($"Product with id: {id} is not foun.");
+            throw new EntityNotFoundException($"Product with id: {id} not found.");
         }
 
         return entity;

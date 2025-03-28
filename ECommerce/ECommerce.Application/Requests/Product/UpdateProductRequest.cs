@@ -1,4 +1,4 @@
-﻿using System.Net.Mail;
+﻿using ECommerce.Application.DTOs.Attachment;
 
 namespace ECommerce.Application.Requests.Product;
 
@@ -9,4 +9,4 @@ public sealed record UpdateProductRequest(
     decimal Price,
     int Quantity,
     string? Description,
-    List<Attachment>? Attachments);
+    List<AttachmentDto>? Attachments);
