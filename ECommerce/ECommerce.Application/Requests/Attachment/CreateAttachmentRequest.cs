@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace ECommerce.Application.Requests.Attachment;
+
 public sealed record CreateAttachmentRequest(
     [Range(1,int.MaxValue,ErrorMessage ="ProductId must be positive")]
     int ProductId,

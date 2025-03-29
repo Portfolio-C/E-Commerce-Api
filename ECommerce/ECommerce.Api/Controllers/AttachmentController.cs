@@ -1,4 +1,5 @@
 ﻿using ECommerce.Application.Interfaces;
+using ECommerce.Application.Requests.Attachment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Api.Controllers;
@@ -83,6 +84,14 @@ public class AttachmentController(IAttachmentService service, IProductService pr
 
             using var memoryStream = new MemoryStream();
             await file.CopyToAsync(memoryStream);
+
+            var attachment = new CreateAttachmentRequest
+            {
+                FileName = file.FileName,
+                FileType = file.ContentType,
+                FileData = memoryStream.ToArray(),
+                ProductId = productId
+            };
         }
         catch (Exception ex)
         {

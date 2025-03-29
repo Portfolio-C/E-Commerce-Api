@@ -18,5 +18,5 @@ public sealed record CreateProductRequest(
 
     [StringLength(1000)]
     string? Description,
-    List<AttachmentDto> Attachments
+    List<AttachmentDto>? AttachmentIds
     );
