@@ -71,6 +71,11 @@ public class ProductsController(IProductService service) : Controller
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> CreateAsync([FromBody] CreateProductRequest requst)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         try
         {
             var createdProduct = await service.CreateAsync(requst);

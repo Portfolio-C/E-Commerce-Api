@@ -1,4 +1,4 @@
-﻿using System.Net.Mail;
+﻿using ECommerce.Application.DTOs.Attachment;
 
 namespace ECommerce.Application.DTOs.Product;
 
@@ -9,5 +9,5 @@ public sealed record ProductDto(
     decimal Price,
     int Quantity,
     string? Description,
-    List<Attachment> Attachments
+    List<AttachmentDto> Attachments
     );
