@@ -1,4 +1,5 @@
 using ECommerce.Api.Extensions;
+using ECommerce.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.UseMiddleware<ErrorHandlerMiddleware>();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
