@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using ECommerce.Application.Interfaces;
+﻿using ECommerce.Application.Interfaces;
 using ECommerce.Application.Requests.Category;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -7,6 +6,8 @@ using Newtonsoft.Json;
 namespace ECommerce.Api.Controllers;
 
 [Route("api/categories")]
+[ApiController]
+
 public class CategoriesController(ICateogryService service) : Controller
 {
     /// <summary>
@@ -55,7 +56,7 @@ public class CategoriesController(ICateogryService service) : Controller
         {
             return StatusCode(
                 StatusCodes.Status500InternalServerError,
-                new { Message = "An error occurred", Error = ex.Message});
+                new { Message = "An error occurred", Error = ex.Message });
         }
     }
 
@@ -74,7 +75,7 @@ public class CategoriesController(ICateogryService service) : Controller
         {
             var newCategory = await service.CreateAsync(request);
 
-            return CreatedAtAction(nameof(GetByIdAsync), new {id = newCategory.Id}, newCategory);
+            return CreatedAtAction(nameof(GetByIdAsync), new { id = newCategory.Id }, newCategory);
         }
         catch (Exception ex)
         {
@@ -102,7 +103,7 @@ public class CategoriesController(ICateogryService service) : Controller
 
             return Ok(updatedCategory);
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             return StatusCode(
                 StatusCodes.Status500InternalServerError,

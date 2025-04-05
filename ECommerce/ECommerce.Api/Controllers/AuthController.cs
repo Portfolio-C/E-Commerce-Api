@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerce.Api.Controllers;
 
 [Route("api/auth")]
+[ApiController]
+
 public class AuthController(IAuthService authService) : Controller
 {
     /// <summary>
@@ -21,7 +23,7 @@ public class AuthController(IAuthService authService) : Controller
         try
         {
             var token = await authService.LoginAsync(request);
-            
+
             if (token == null)
                 return Unauthorized("Invalid credentials");
 
@@ -69,7 +71,7 @@ public class AuthController(IAuthService authService) : Controller
         try
         {
             var response = await authService.RefreshTokenAsync(request);
-            
+
             if (response == null)
                 return Unauthorized("Invalid refresh token");
 
