@@ -94,6 +94,13 @@ internal sealed class ProductService(IApplicationDbContext context, IMapper mapp
 
         var productToUpdate = mapper.Map<Product>(request);
 
+        foreach (var attachemnt in productToUpdate.Attachments)
+        {
+            attachemnt.ProductId = productToUpdate.Id;
+
+            context.Attachments.Update(attachemnt);
+        }
+
         context.Products.Update(productToUpdate);
         await context.SaveChangesAsync();
 

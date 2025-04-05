@@ -1,4 +1,4 @@
-﻿using ECommerce.Application.DTOs.Attachment;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace ECommerce.Application.Requests.Product;
 
@@ -9,4 +9,4 @@ public sealed record UpdateProductRequest(
     decimal Price,
     int Quantity,
     string? Description,
-    List<AttachmentDto>? Attachments);
+    List<IFormFile> Images);

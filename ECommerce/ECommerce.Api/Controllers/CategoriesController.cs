@@ -119,7 +119,7 @@ public class CategoriesController(ICateogryService service) : Controller
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> DeleteAsync([FromQuery] int id)
+    public async Task<IActionResult> DeleteAsync(int id)
     {
         try
         {

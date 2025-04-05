@@ -72,7 +72,7 @@ public class ProductsController(IProductService service) : Controller
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UpdateAsync([FromBody] UpdateProductRequest request)
+    public async Task<IActionResult> UpdateAsync([FromForm] UpdateProductRequest request)
     {
         var updatedProduct = await service.UpdateAsync(request);
 
