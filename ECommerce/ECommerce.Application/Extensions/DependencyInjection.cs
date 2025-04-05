@@ -12,13 +12,14 @@ public static class DependencyInjection
         services.AddAutoMapper(typeof(CategoryMappings).Assembly);
 
         AddServices(services);
-        
+
         return services;
     }
 
     private static void AddServices(IServiceCollection services)
     {
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ITokenHandler, TokenHandler>();
         services.AddScoped<ICateogryService, CategoryService>();
     }

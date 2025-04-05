@@ -36,12 +36,51 @@ internal sealed class ProductService(IApplicationDbContext context, IMapper mapp
 
         var newProduct = mapper.Map<Product>(request);
 
-        context.Products.Add(newProduct);
-        await context.SaveChangesAsync();
+        if (request.Images is not null && request.Images.Any())
+        {
+            foreach (var image in request.Images)
+            {
+                if (image.Length > 0)
+                {
+                    try
+                    {
+                        using var memoryStream = new MemoryStream();
+                        await image.CopyToAsync(memoryStream);
+                        var fileData = memoryStream.ToArray();
 
-        var productDto = mapper.Map<ProductDto>(newProduct);
+                        var attachment = new Attachment
+                        {
+                            FileName = image.FileName,
+                            FileType = image.ContentType,
+                            FileData = fileData,
+                            Product = newProduct
+                        };
 
-        return productDto;
+                        context.Attachments.Add(attachment);
+
+                        newProduct.Attachments.Add(attachment);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new InvalidOperationException($"Error processing image: {ex.Message}", ex);
+                    }
+                }
+            }
+        }
+
+        try
+        {
+            context.Products.Add(newProduct);
+            await context.SaveChangesAsync();
+            var productDto = mapper.Map<ProductDto>(newProduct);
+
+            return productDto;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Error saving to database: {ex.Message}", ex);
+        }
+
     }
 
     public async Task<ProductDto> UpdateAsync(UpdateProductRequest request)

@@ -20,18 +20,9 @@ public class ProductsController(IProductService service) : Controller
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetAsync()
     {
-        try
-        {
-            var products = await service.GetAsync();
+        var products = await service.GetAsync();
 
-            return Ok(products);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(
-                StatusCodes.Status500InternalServerError,
-                new { Message = "An error occurred", Error = ex.Message });
-        }
+        return Ok(products);
     }
 
     /// <summary>
@@ -46,18 +37,9 @@ public class ProductsController(IProductService service) : Controller
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> GetProductByIdAsync([FromQuery] int id)
     {
-        try
-        {
-            var product = await service.GetByIdAsync(id);
+        var product = await service.GetByIdAsync(id);
 
-            return Ok(product);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(
-                StatusCodes.Status500InternalServerError,
-                new { Message = "An error occurred", Error = ex.Message });
-        }
+        return Ok(product);
     }
 
     /// <summary>
@@ -69,25 +51,16 @@ public class ProductsController(IProductService service) : Controller
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateProductRequest requst)
+    public async Task<IActionResult> CreateAsync(CreateProductRequest requst)
     {
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
         }
 
-        try
-        {
-            var createdProduct = await service.CreateAsync(requst);
+        var createdProduct = await service.CreateAsync(requst);
 
-            return CreatedAtAction(nameof(GetProductByIdAsync), new { id = createdProduct.Id }, createdProduct);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(
-                StatusCodes.Status500InternalServerError,
-                new { Message = "An error occurred", Error = ex.Message });
-        }
+        return CreatedAtAction(nameof(GetProductByIdAsync), new { id = createdProduct.Id }, createdProduct);
     }
 
     /// <summary>
@@ -101,18 +74,9 @@ public class ProductsController(IProductService service) : Controller
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> UpdateAsync([FromBody] UpdateProductRequest request)
     {
-        try
-        {
-            var updatedProduct = await service.UpdateAsync(request);
+        var updatedProduct = await service.UpdateAsync(request);
 
-            return Ok(updatedProduct);
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(
-                StatusCodes.Status500InternalServerError,
-                new { Message = "An error occurred", Error = ex.Message });
-        }
+        return Ok(updatedProduct);
     }
 
     /// <summary>
@@ -125,18 +89,9 @@ public class ProductsController(IProductService service) : Controller
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteAsync([FromQuery] int id)
     {
-        try
-        {
-            await service.DeleteAsync(id);
+        await service.DeleteAsync(id);
 
-            return NoContent();
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(
-                StatusCodes.Status500InternalServerError,
-                new { Message = "An error occurred", Error = ex.Message });
-        }
+        return NoContent();
     }
 
     /// <summary>
