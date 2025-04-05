@@ -20,7 +20,8 @@ public static class DependencyInjection
     {
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IProductService, ProductService>();
-        services.AddScoped<ITokenHandler, TokenHandler>();
         services.AddScoped<ICateogryService, CategoryService>();
+        services.AddScoped<IAttachmentService, AttachmentService>();
+        services.AddScoped<ITokenHandler, TokenHandler>();
     }
 }

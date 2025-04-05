@@ -6,11 +6,15 @@ using ECommerce.Application.Requests.Attachment;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Exceptions;
 using ECommerce.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Application.Services;
 
-internal sealed class AttachmentService(IApplicationDbContext context, IMapper mappaer) : IAttachmentService
+internal sealed class AttachmentService(
+    IApplicationDbContext context,
+    IMapper mappaer,
+    IProductService productService) : IAttachmentService
 {
     public async Task<List<AttachmentDto>> GetAsync()
     {
@@ -30,13 +34,22 @@ internal sealed class AttachmentService(IApplicationDbContext context, IMapper m
         return dto;
     }
 
-    public async Task<AttachmentDto> CreateAsync(CreateAttachmentRequest request)
+    public async Task<AttachmentDto> CreateAsync(IFormFile file, int productId)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        ArgumentNullException.ThrowIfNull(file);
 
-        var newAttachment = mappaer.Map<Attachment>(request);
+        var product = await productService.GetByIdAsync(productId);
 
-        context.Attachments.Add(newAttachment);
+        ArgumentNullException.ThrowIfNull(product);
+
+        using var memoryStream = new MemoryStream();
+        await file.CopyToAsync(memoryStream);
+
+        var newAttachment = new CreateAttachmentRequest(productId, file.FileName, file.ContentType, memoryStream.ToArray());
+
+        var entity = mappaer.Map<Attachment>(newAttachment);
+
+        context.Attachments.Add(entity);
         await context.SaveChangesAsync();
 
         var attachmentDto = mappaer.Map<AttachmentDto>(newAttachment);

@@ -1,12 +1,11 @@
 ﻿using ECommerce.Application.Interfaces;
-using ECommerce.Application.Requests.Attachment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Api.Controllers;
 
 [Route("api/attachments")]
 [ApiController]
-public class AttachmentController(IAttachmentService service, IProductService productService) : Controller
+public class AttachmentController(IAttachmentService service) : Controller
 {
     /// <summary>
     /// Gets all attachments.
@@ -38,10 +37,10 @@ public class AttachmentController(IAttachmentService service, IProductService pr
     /// </summary>
     /// <param name="id">Attachment ID.</param>
     /// <returns>Returns a single Attachment.</returns>
+    [HttpGet("{id:int}", Name = nameof(GetAttachmentByIdAsync))]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    [HttpGet("{id:int}", Name = nameof(GetAttachmentByIdAsync))]
     public async Task<IActionResult> GetAttachmentByIdAsync(int id)
     {
         try
@@ -61,37 +60,18 @@ public class AttachmentController(IAttachmentService service, IProductService pr
     /// <summary>
     /// Create a attachment.
     /// </summary>
-    /// <param name="requst">A attachment to create.</param>
     /// <returns>Returns newly created attachment.</returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UploadAttachment([FromForm] IFormFile file, int productId)
+    public async Task<IActionResult> UploadAttachment(IFormFile file, int productId)
     {
         try
         {
-            if (file is null || file.Length == 0)
-            {
-                return BadRequest("No file Uploaded.");
-            }
+            var createdAttachment = await service.CreateAsync(file, productId);
 
-            var product = await productService.GetByIdAsync(productId);
-            if (product is null)
-            {
-                return NotFound($"Product with id:{productId} not found");
-            }
-
-            using var memoryStream = new MemoryStream();
-            await file.CopyToAsync(memoryStream);
-
-            var attachment = new CreateAttachmentRequest
-            {
-                FileName = file.FileName,
-                FileType = file.ContentType,
-                FileData = memoryStream.ToArray(),
-                ProductId = productId
-            };
+            return CreatedAtAction(nameof(GetAttachmentByIdAsync), new { id = createdAttachment.Id }, createdAttachment);
         }
         catch (Exception ex)
         {
