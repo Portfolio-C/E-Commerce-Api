@@ -204,14 +204,9 @@ namespace ECommerce.Infrastructure.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
-
+                    b.HasIndex("UserId");
                     b.ToTable("Orders");
                 });
 
