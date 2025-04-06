@@ -1,4 +1,5 @@
 ﻿using ECommerce.Application.Interfaces;
+using ECommerce.Application.Requests.Attachment;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Api.Controllers;
@@ -65,11 +66,11 @@ public class AttachmentController(IAttachmentService service) : Controller
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> UploadAttachment(IFormFile file, int productId)
+    public async Task<IActionResult> UploadAttachment([FromForm] CreateAttachmentRequest request)
     {
         try
         {
-            var createdAttachment = await service.CreateAsync(file, productId);
+            var createdAttachment = await service.CreateAsync(request);
 
             return CreatedAtAction(nameof(GetAttachmentByIdAsync), new { id = createdAttachment.Id }, createdAttachment);
         }
