@@ -23,9 +23,16 @@ internal sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasPrecision(18, 2)
             .IsRequired();
 
-        builder.HasOne(p => p.Category)
-            .WithMany(c => c.Products)
-            .HasForeignKey(p => p.CategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.HasMany(p => p.Favorites)
+            .WithOne(f => f.Product)
+            .HasForeignKey(f => f.ProductId);
+
+        builder.HasMany(p => p.Baskets)
+               .WithOne(b => b.Product)
+               .HasForeignKey(b => b.ProductId);
+
+        builder.HasMany(p => p.OrderItems)
+               .WithOne(oi => oi.Product)
+               .HasForeignKey(oi => oi.ProductId);
     }
 }

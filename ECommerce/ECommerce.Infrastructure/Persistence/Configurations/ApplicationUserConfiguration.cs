@@ -21,5 +21,20 @@ internal sealed class ApplicationUserConfiguration : IEntityTypeConfiguration<Ap
         builder.Property(u => u.Role)
             .HasConversion<string>()
             .IsRequired();
+
+        builder.HasMany(u => u.Favorites)
+               .WithOne(f => f.User)
+               .HasForeignKey(f => f.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(u => u.Baskets)
+               .WithOne(b => b.User)
+               .HasForeignKey(b => b.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasMany(u => u.Orders)
+               .WithOne(o => o.User)
+               .HasForeignKey(o => o.UserId)
+               .OnDelete(DeleteBehavior.Cascade);
     }
 }
