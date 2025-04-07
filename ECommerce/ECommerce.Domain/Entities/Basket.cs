@@ -1,6 +1,7 @@
 ﻿using ECommerce.Domain.Common;
 
 namespace ECommerce.Domain.Entities;
+
 public class Basket : EntityBase
 {
     public int UserId { get; set; }
