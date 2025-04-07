@@ -20,5 +20,8 @@ public class Product : EntityBase
     public Product()
     {
         Attachments = new HashSet<Attachment>();
+        Favorites = new HashSet<Favorite>();
+        Baskets = new HashSet<Basket>();
+        OrderItems = new HashSet<OrderItem>();
     }
 }
