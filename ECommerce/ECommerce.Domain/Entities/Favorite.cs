@@ -4,7 +4,7 @@ namespace ECommerce.Domain.Entities;
 
 public class Favorite : EntityBase
 {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     public int ProductId { get; set; }
     public DateTime AddedDate { get; set; } = DateTime.UtcNow;
 

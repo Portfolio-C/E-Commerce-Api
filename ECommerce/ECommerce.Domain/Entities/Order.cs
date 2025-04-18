@@ -5,7 +5,7 @@ namespace ECommerce.Domain.Entities;
 
 public class Order : EntityBase
 {
-    public int UserId { get; set; }
+    public string UserId { get; set; }
     public DateTime OrderDate { get; set; } = DateTime.UtcNow;
     public decimal TotalAmount { get; set; }
     public OrderStatus Status { get; set; }
