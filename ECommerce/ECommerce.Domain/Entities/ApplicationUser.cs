@@ -9,9 +9,9 @@ public class ApplicationUser : IdentityUser
     public required string LastName { get; set; }
     public ApplicationUserRole Role { get; set; }
 
-    public virtual ICollection<Favorite> Favorites { get; set; }
-    public virtual ICollection<Basket> Baskets { get; set; }
-    public virtual ICollection<Order> Orders { get; set; }
+    public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
+    public virtual ICollection<Basket> Baskets { get; set; } = new List<Basket>();
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 
     public ApplicationUser()
     {
