@@ -88,7 +88,6 @@ public class CategoriesController(ICateogryService service) : Controller
     /// <summary>
     /// Updates a category.
     /// </summary>
-    /// <param name="id">Category ID.</param>
     /// <param name="request">A category to update.</param>
     /// <returns>Returns updated category.</returns>
     [HttpPut]
