@@ -10,6 +10,8 @@ internal sealed class ApplicationUserConfiguration : IEntityTypeConfiguration<Ap
     {
         builder.ToTable("Users");
 
+        builder.HasKey(u => u.Id);
+
         builder.Property(u => u.FirstName)
             .IsRequired()
             .HasMaxLength(Constants.DEFAULT_STRING_LENGTH);

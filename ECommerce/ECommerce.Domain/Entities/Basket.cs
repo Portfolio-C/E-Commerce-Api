@@ -9,6 +9,6 @@ public class Basket : EntityBase
     public int Quantity { get; set; }
     public DateTime AddedDate { get; set; } = DateTime.UtcNow;
 
-    public virtual ApplicationUser User { get; set; }
-    public virtual Product Product { get; set; }
+    public virtual ApplicationUser User { get; set; } = null!;
+    public virtual Product Product { get; set; } = null!;
 }

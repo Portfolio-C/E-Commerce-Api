@@ -9,5 +9,7 @@ internal sealed class FavoriteConfiguration : IEntityTypeConfiguration<Favorite>
     public void Configure(EntityTypeBuilder<Favorite> builder)
     {
         builder.HasKey(f => f.Id);
+
+        builder.Property(f => f.UserId).IsRequired();
     }
 }
