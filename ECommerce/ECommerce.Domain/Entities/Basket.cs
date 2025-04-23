@@ -4,7 +4,7 @@ namespace ECommerce.Domain.Entities;
 
 public class Basket : EntityBase
 {
-    public string UserId { get; set; } = null!;
+    public string UserId { get; set; }
     public int ProductId { get; set; }
     public int Quantity { get; set; }
     public DateTime AddedDate { get; set; } = DateTime.UtcNow;

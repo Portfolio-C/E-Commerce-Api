@@ -22,6 +22,7 @@ public static class DependencyInjection
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICateogryService, CategoryService>();
         services.AddScoped<IAttachmentService, AttachmentService>();
+        services.AddScoped<IBasketService, BasketService>();
         services.AddScoped<ITokenHandler, TokenHandler>();
     }
 }

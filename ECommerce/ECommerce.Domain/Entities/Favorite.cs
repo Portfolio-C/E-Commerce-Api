@@ -1,4 +1,5 @@
 ﻿using ECommerce.Domain.Common;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 
 namespace ECommerce.Domain.Entities;
 

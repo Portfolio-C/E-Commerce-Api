@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using System.Reflection;
 using System.Text;
 
 namespace ECommerce.Api.Extensions;
@@ -96,6 +97,10 @@ public static class DependencyInjection
                     Url = new Uri("https://opensource.org/licenses/MIT")
                 }
             });
+
+            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+            options.IncludeXmlComments(xmlPath);
 
             var securityScheme = new OpenApiSecurityScheme
             {
