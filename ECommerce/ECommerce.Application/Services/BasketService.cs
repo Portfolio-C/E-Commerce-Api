@@ -82,5 +82,4 @@ internal sealed class BasketService(IApplicationDbContext context, IMapper mappe
 
         return entity;
     }
-
 }

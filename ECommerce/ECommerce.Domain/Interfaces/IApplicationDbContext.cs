@@ -9,7 +9,10 @@ public interface IApplicationDbContext
     DbSet<Category> Categories { get; set; }
     DbSet<Product> Products { get; set; }
     DbSet<Attachment> Attachments { get; set; }
-    DbSet<Basket> Baskets{ get; set; }
+    DbSet<Basket> Baskets { get; set; }
+    DbSet<OrderItem> OrderItems { get; set; }
+    DbSet<Order> Orders { get; set; }
+    DbSet<Favorite> Favorites { get; set; }
 
     DbSet<RefreshToken> RefreshTokens { get; set; }
 
