@@ -84,7 +84,10 @@ public class BasketController(IBasketService service) : ControllerBase
     /// Delete a single basket by ID.
     /// </summary>
     /// <param name="id">Basket ID to delete.</param>
-    [HttpDelete]
+    [HttpDelete("{id:int:min(1)}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> DeleteAsync(int id)
     {
         await service.DeleteAsync(id);

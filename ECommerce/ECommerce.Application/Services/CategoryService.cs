@@ -19,7 +19,7 @@ internal sealed class CategoryService(IApplicationDbContext context, IMapper map
             .ProjectTo<CategoryDto>(mapper.ConfigurationProvider)
             .ToListAsync();
 
-        return categories;  
+        return categories;
     }
 
     public async Task<CategoryDto> GetByIdAsync(int id)
