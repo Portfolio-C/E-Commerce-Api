@@ -1,6 +1,7 @@
 ﻿using ECommerce.Application.Configurations;
 using ECommerce.Application.Extensions;
 using ECommerce.Infrastructure.Extensions;
+using ECommerce.TestDataGenerator.Extension;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -17,6 +18,7 @@ public static class DependencyInjection
     {
         services.RegisterApplication();
         services.RegisterInfrastructure(configuration);
+        services.AddTestDataGenerator(configuration);
 
         AddControllers(services);
         AddAuthentication(services, configuration);
@@ -87,8 +89,8 @@ public static class DependencyInjection
                 Description = "E-Commerce REST API",
                 Contact = new OpenApiContact
                 {
-                    Name = "Choriyev Ramazon",
-                    Email = "shukhratovich75@gmail.com",
+                    Name = "Boboyev Boburmirzo",
+                    Email = "boburboboyev3@gmail.com",
                     Url = new Uri("https://e-commerce.uz"),
                 },
                 License = new OpenApiLicense

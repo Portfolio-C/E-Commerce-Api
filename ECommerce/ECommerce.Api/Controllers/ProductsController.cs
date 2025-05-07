@@ -9,7 +9,7 @@ namespace ECommerce.Api.Controllers;
 [ApiController]
 public class ProductsController(IProductService service) : Controller
 {
-    /// <summary>
+    /// <summary>   
     /// Gets all products.
     /// </summary>
     /// <returns>Returns list of products.</returns>
