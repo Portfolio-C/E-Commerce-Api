@@ -1,3 +1,4 @@
+using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
 using ECommerce.TestDataGenerator.Configurations;
 using Microsoft.AspNetCore.Identity;
@@ -8,6 +9,6 @@ public interface IDatabaseSeeder
 {
     Task SeedDatabaseAsync(
         IApplicationDbContext context,
-        UserManager<IdentityUser> userManager,
+        UserManager<ApplicationUser> userManager,
         DataSeedSettings settings);
 }

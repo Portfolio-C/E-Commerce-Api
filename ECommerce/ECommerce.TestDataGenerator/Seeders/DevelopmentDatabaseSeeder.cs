@@ -19,18 +19,18 @@ internal sealed class DevelopmentDatabaseSeeder() : IDatabaseSeeder
         Randomizer.Seed = new Random(123);
     }
 
-    public async Task SeedDatabaseAsync(IApplicationDbContext context, UserManager<IdentityUser> userManager, DataSeedSettings settings)
+    public async Task SeedDatabaseAsync(IApplicationDbContext context, UserManager<ApplicationUser> userManager, DataSeedSettings settings)
     {
         await CreateUsersAsync(context, userManager);
         await CreateCategoriesAsync(context);
         await CreateProductsAsync(context);
-        await CreateOrderItemsAsync(context);
         await CreateOrdersAsync(context);
+        await CreateOrderItemsAsync(context);
         await CreateBasketsAsync(context);
         await CreateFavoritesAsync(context);
     }
 
-    private async Task CreateUsersAsync(IApplicationDbContext context, UserManager<IdentityUser> userManager)
+    private async Task CreateUsersAsync(IApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         if (context.ApplicationsUsers.Any())
         {
@@ -116,6 +116,7 @@ internal sealed class DevelopmentDatabaseSeeder() : IDatabaseSeeder
         }
 
         var products = context.Products.ToList();
+        var orders = context.Orders.ToList();
 
         if (!products.Any())
         {
@@ -126,10 +127,12 @@ internal sealed class DevelopmentDatabaseSeeder() : IDatabaseSeeder
         .RuleFor(oi => oi.ProductId, f => f.PickRandom(products).Id)
         .RuleFor(oi => oi.Product, f => f.PickRandom(products))
         .RuleFor(oi => oi.Quantity, f => f.Random.Int(1, 5))
+        .RuleFor(oi => oi.OrderId, f => f.PickRandom(orders).Id)
         .RuleFor(oi => oi.Price, (f, oi) => oi.Product.Price);
 
         var orderItems = orderItemFaker.Generate(30);
-        await context.OrderItems.AddRangeAsync(orderItems);
+        context.OrderItems.AddRange(orderItems);
+
         await context.SaveChangesAsync();
     }
 
@@ -142,7 +145,7 @@ internal sealed class DevelopmentDatabaseSeeder() : IDatabaseSeeder
 
         var users = context.ApplicationsUsers.ToList();
         var orderItems = context.OrderItems.ToList();
-        if (!users.Any() || !orderItems.Any())
+        if (!users.Any())
         {
             return;
         }
@@ -154,18 +157,22 @@ internal sealed class DevelopmentDatabaseSeeder() : IDatabaseSeeder
 
         var orders = orderFaker.Generate(10);
 
-        foreach (var order in orders)
+        if (orderItems.Any())
         {
-            var itemCount = _faker.Random.Int(1, 3);
-            var selectedItems = _faker.PickRandom(orderItems, itemCount).ToList();
 
-            order.OrderItems = new HashSet<OrderItem>(selectedItems);
-            order.TotalAmount = order.OrderItems.Sum(oi => oi.Quantity * oi.Price);
-
-            foreach (var item in order.OrderItems)
+            foreach (var order in orders)
             {
-                item.Order = order;
-                item.OrderId = order.Id;
+                var itemCount = _faker.Random.Int(1, 3);
+                var selectedItems = _faker.PickRandom(orderItems, itemCount).ToList();
+
+                order.OrderItems = new HashSet<OrderItem>(selectedItems);
+                order.TotalAmount = order.OrderItems.Sum(oi => oi.Quantity * oi.Price);
+
+                foreach (var item in order.OrderItems)
+                {
+                    item.Order = order;
+                    item.OrderId = order.Id;
+                }
             }
         }
 

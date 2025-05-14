@@ -9,4 +9,10 @@ public sealed record OrderDto(
     DateTime OrderDate,
     decimal TotalAmount,
     OrderStatus Status,
-    IEnumerable<OrderItemDto> Items);
+    IEnumerable<OrderItemDto> Items)
+{
+    public OrderDto() : this(0, "", DateTime.Now, 0m, OrderStatus.Pending, new List<OrderItemDto>())
+    {
+
+    }
+}

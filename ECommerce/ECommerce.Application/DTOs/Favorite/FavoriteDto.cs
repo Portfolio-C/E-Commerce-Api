@@ -7,4 +7,10 @@ public sealed record FavoriteDto(
     int ProductId,
     string UserId,
     DateTime AddedDate
-);
+)
+{
+    public FavoriteDto() : this(0, 0, "", DateTime.Now)
+    {
+
+    }
+}

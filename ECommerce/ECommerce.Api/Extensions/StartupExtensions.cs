@@ -1,3 +1,4 @@
+using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
 using ECommerce.TestDataGenerator.Configurations;
 using ECommerce.TestDataGenerator.Interfaces;
@@ -15,7 +16,7 @@ public static class StartupExtensions
         var seeder = seederFactory.CreateSeeder(app.Environment.EnvironmentName);
         var context = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
 
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var settings = scope.ServiceProvider.GetRequiredService<IOptions<DataSeedSettings>>();
 
         await seeder.SeedDatabaseAsync(context, userManager, settings.Value);
